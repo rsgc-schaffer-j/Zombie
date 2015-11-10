@@ -52,8 +52,10 @@ void draw() {
   z0.update();
   z10.update();
   hero.update();  
+  noStroke();
   fill(255);
   rect(rectx, 0, 500, 500);
+  stroke(0);
   fill(col);
   textSize(70);
   text("Zombie Rush", letx, 200);
@@ -160,7 +162,7 @@ void keyPressed() {
     draw();
     loop();
     z0.setX(-5);
-    z10.setX(-5);
+    z1.setX(-5);
     z2.setX(-5);
     z3.setX(-5);
     z4.setX(-5);
@@ -169,6 +171,7 @@ void keyPressed() {
     z7.setX(-5);
     z8.setX(-5);
     z9.setX(-5);
+    z10.setX(-5);
   }
   if (key == CODED) {
     if (keyCode==UP) {

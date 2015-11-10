@@ -20,41 +20,89 @@ class Zomies {
       y=y+2;
      a=random(-2,2);
       b=random(-2,2);
+       if(a<1&&a>-1){
+         a=random(-2,2);
+      }
+       if(b<1&&b>-1){
+         b=random(-2,2);
+      }
     } else if (x>475&&x<500&&y>0&&y<25) {
       x=x-2;
       y=y-2;
     a=random(-2,2);
       b=random(-2,2);
+       if(a<1&&a>-1){
+         a=random(-2,2);
+      }
+       if(b<1&&b>-1){
+         b=random(-2,2);
+      }
     } else if (x>475&&x<500&&y>475&&y<500) {
       x=x-2;
       y=y-2;
      a=random(-2,2);
       b=random(-2,2);
+       if(a<1&&a>-1){
+         a=random(-2,2);
+      }
+       if(b<1&&b>-1){
+         b=random(-2,2);
+      }
     } else if (x>0 && x<25&&y>475&&y<500) {
       x=x+2;
       y=y-2;
      a=random(-2,2);
       b=random(-2,2);
+      if(a<1&&a>-1){
+         a=random(-2,2);
+      }
+       if(b<1&&b>-1){
+         b=random(-2,2);
+      }
     } else if (y>475&&y<500&&x>25&&x<475) {
       y=y-2;
       x=x+2;
      a=random(-2,2);
       b=random(-2,2);
+       if(a<1&&a>-1){
+         a=random(-2,2);
+      }
+       if(b<1&&b>-1){
+         b=random(-2,2);
+      }
     } else if (y>0&&y<25&&x>25&&x<475) {
       y=y+2;
       x=x+2;
      a=random(-2,2);
       b=random(-2,2);
+       if(a<1&&a>-1){
+         a=random(-2,2);
+      }
+       if(b<1&&b>-1){
+         b=random(-2,2);
+      }
     } else if (x>475&&x<500&&y>25&&y<475) {
       x=x-2;
       y=y+2;
      a=random(-2,2);
       b=random(-2,2);
+       if(a<1&&a>-1){
+         a=random(-2,2);
+      }
+       if(b<1&&b>-1){
+         b=random(-2,2);
+      }
     } else if (x>0&&x<25&&y>25&&y<475) {
       x=x+2;
       y=y+2;
     a=random(-2,2);
       b=random(-2,2);
+       if(a<1&&a>-1){
+         a=random(-2,2);
+      }
+       if(b<1&&b>-1){
+         b=random(-2,2);
+      }
     }else if(y>25&&y<475&&x>25&&x<475){
       x=x+b;
       y=y+a;
