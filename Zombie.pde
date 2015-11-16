@@ -25,6 +25,8 @@ int high;
 int imagex;
 int healthNumber;
 int deathScreenx;
+int invincible;
+int invincibleTime;
 void setup() {
   size(500, 500);
   hero=new Hero();
@@ -37,13 +39,14 @@ void setup() {
   openScreenWordx1=100;
   q=5;
   //**starting amount activez+1**
-  activez=5;
+  activez=10;
   //**starting amount activez+1**
   time=0;
   score=0;
   imagex=1000;
   healthNumber=1;
   deathScreenx=1000;
+  invincible=0;
   //zombie creater
   z = new Zomies[zcount];  
   int i = 0;
@@ -70,9 +73,23 @@ void draw() {
     noLoop();
   }
 
-  image(floor, 0, 0, 500, 500);
+  //invicibility
+  if (invincible>0) {
+    invincibleTime = invincibleTime + 1;
+    int t = invincibleTime/60;
+    invincible = invincible - t;
+    hero.setcol(35);
+    hero.setC(35);
+  }
+  if (invincible==0) {
+     hero.setcol(15);
+    hero.setC(15);
+  }
+    
+  //image(floor, 0, 0, 500, 500);
+  background(200);
   Health1.update();
-  z[0].setA(true);
+
   //add zombies
   time=time+1;
   score=time/60;
@@ -81,6 +98,7 @@ void draw() {
     q=q+4*0.8;
     Health1.setX(random(5, 495));
     Health1.setY(random(5, 495));
+
     //safty net
     if (activez>zcount-2) {
       textSize(20);
@@ -104,7 +122,7 @@ void draw() {
 
   //open screen
   noStroke();
-  fill(255);
+  tint(255, 0, 0);
   image(Zombie, openScreenImagex, 0, 500, 500);
   stroke(0);
   fill(255);
@@ -114,22 +132,20 @@ void draw() {
   text("Press space key to start", openScreenWordx1, 230);
   fill(0);
   text("Score:"+score, 50, 50);
-  text("Health:"+healthNumber, 50, 70);
-
+  text("Health:"+ healthNumber, 50, 70);
 
   //health detection
   int p=0;
   while (p < zcount) {
     if (hero.isTouching(z[p])) {
-      hero.setC(-20);
-      healthNumber=healthNumber-1;
-      hero.setX(250);
-      hero.setY(250);
-      //int t = 0;
-      //while (t<activez) {
-      //z[t].setX(500);
-      //t++;
-      //}
+      if (invincible==0) {
+        hero.setC(-20);
+        healthNumber=healthNumber-1;
+        hero.setX(250);
+        hero.setY(250);
+        invincible=4;
+        invincibleTime=0;
+      }
     }
     p++;
   }
@@ -146,7 +162,8 @@ void draw() {
     deathScreenx=70;
     imagex=0;
     image(Zombie1, imagex, 0, 500, 500);
-    fill(255, 0, 0);
+    stroke(0);
+    fill(255);
     textSize(70);
     text("Game over", deathScreenx-40, 200);
     textSize(15);
@@ -183,12 +200,13 @@ void keyPressed() {
       i++;
     }
     imagex=1000;
-    activez=5;
+    activez=10;
     hero.setX(250);
     hero.setY(250);
     q=0;
     time=0;
-    hero.setcol(0);
+     hero.setcol(15);
+    hero.setC(15);
     healthNumber=1;
     deathScreenx=1000;
     draw();

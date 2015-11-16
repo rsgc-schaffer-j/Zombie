@@ -8,6 +8,7 @@ class Health{
     r=10;
   }
   void update(){
+    noTint();
     image(health,x,y,r*2,r*2);
   }
   float getX() {

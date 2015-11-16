@@ -12,14 +12,15 @@ class Hero {
     x1=250;
     y1=250;
     r=15;
-    col=0;
-    c=0;
+    col=10;
+    c=10;
   }
 
   void update() {
-    col=col+c;
-    fill(col,0,0);
-    image(hero1,x1, y1, r*2, r*2);
+    fill(255);
+    noStroke();
+ellipse(x1+15,y1+15,col,c);
+    image(hero1,x1, y1, 30, 30);
     x1=x1-s4;
     x1=x1+s3;
     y1=y1-s1;
@@ -65,6 +66,9 @@ class Hero {
   }
   void setY(float newy_) {
     y1 = newy_;
+  }
+  void setR(float newr_) {
+    r = newr_;
   }
 
   boolean isTouching(Zomies z) {

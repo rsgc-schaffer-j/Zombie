@@ -16,7 +16,7 @@ class Zomies {
   }
   void update() {
     noTint();
-    image(zombiehead,x, y, r1*2, r1*2);
+    image(zombiehead,x, y, 30, 30);
 
     if (active==true) {
       x1=2;
@@ -127,6 +127,9 @@ class Zomies {
   }
   float getY() {
     return y+r1;
+  }
+   void setR(float newr_) {
+    r1 = newr_;
   }
   void setX(float newx_) {
     x = newx_;
