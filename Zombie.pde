@@ -1,152 +1,168 @@
-Zomies z1;
-Zomies z2;
-Zomies z3;
-Zomies z4;
-Zomies z5;
-Zomies z6;
-Zomies z7;
-Zomies z8;
-Zomies z9;
-Zomies z0;
-Zomies z10;
+Zomies[] z;
+//***ZOMBIE MAX NUMBER***
+int zcount = 200;
+//***ZOMBIE MAX NUMBER***
+//classes
 Hero hero;
-float c;
-float v;
+Health Health1;
+//images
+PImage hero1;
+PImage Zombie;
+PImage health;
+PImage zombiehead;
+PImage Zombie1;
+PImage floor;
+
 float col;
-int rectx;
-float letx;
-float letx1;
+int openScreenImagex;
+float openScreenWordx;
+float openScreenWordx1;
+float q;  //new zombie time counter
+int time;  //time
+int activez; 
+int score;
+int high;
+int imagex;
+int healthNumber;
+int deathScreenx;
 void setup() {
-  noLoop();
   size(500, 500);
-  c=random(-50, 250);
-  v=random(-50, 0);
   hero=new Hero();
-  z1=new Zomies();
-  z2=new Zomies();
-  z3=new Zomies();
-  z4=new Zomies();
-  z5=new Zomies();
-  z6=new Zomies();
-  z7=new Zomies();
-  z8=new Zomies();
-  z9=new Zomies();
-  z0=new Zomies();
-  z10=new Zomies();
+  Health1=new Health();
+
+  //variables
   col=0;
-  rectx=0;
-  letx=30;
-  letx1=100;
+  openScreenImagex=0;
+  openScreenWordx=30;
+  openScreenWordx1=100;
+  q=5;
+  //**starting amount activez+1**
+  activez=5;
+  //**starting amount activez+1**
+  time=0;
+  score=0;
+  imagex=1000;
+  healthNumber=1;
+  deathScreenx=1000;
+  //zombie creater
+  z = new Zomies[zcount];  
+  int i = 0;
+  while (i < zcount) { 
+    z[i] = new Zomies(false);
+    i++;
+  }
+  int t = 0;
+  while (t < activez) { 
+    z[t] = new Zomies(true);
+    t++;
+  }
+  //images
+  Zombie = loadImage("Zombie.jpg");
+  Zombie1 = loadImage("Zombie1.jpg");
+  hero1 = loadImage("batman.png");
+  floor = loadImage("floor.jpg");
+  zombiehead = loadImage("zombiehead.png");
+  health = loadImage("health1.png");
 }
+
 void draw() {
-  background(255);
-  z1.update();
-  z2.update();
-  z3.update();
-  z4.update();
-  z5.update();
-  z6.update();
-  z7.update();
-  z8.update();
-  z9.update();
-  z0.update();
-  z10.update();
+  if (openScreenWordx==30) {
+    noLoop();
+  }
+
+  image(floor, 0, 0, 500, 500);
+  Health1.update();
+  z[0].setA(true);
+  //add zombies
+  time=time+1;
+  score=time/60;
+  Health1.update();
+  if (score>q) {
+    q=q+4*0.8;
+    Health1.setX(random(5, 495));
+    Health1.setY(random(5, 495));
+    //safty net
+    if (activez>zcount-2) {
+      textSize(20);
+      text("you did the impossible you beat the max score", 20, 200);
+      activez=activez+0;
+      high=999999;
+      text("Highscore: Infinity!!!", 170, 220);
+      noLoop();
+    } else {
+      activez=activez+1;
+    }
+  }
+  //draw zombies
+  int i = 0;
+  while (i < zcount) {  
+    z[i].update(); 
+    i++;
+  }
+  z[activez].setA(true);
   hero.update();  
+
+  //open screen
   noStroke();
   fill(255);
-  rect(rectx, 0, 500, 500);
+  image(Zombie, openScreenImagex, 0, 500, 500);
   stroke(0);
-  fill(col);
+  fill(255);
   textSize(70);
-  text("Zombie Rush", letx, 200);
+  text("Zombie Rush", openScreenWordx, 200);
   textSize(25);
-  text("Press space key to start", letx1, 230);
-  if (hero.isTouching(z0)) {
-    fill(0);
-    textSize(70);
-    text("Game over", 30, 200);
-    textSize(25);
-    text("Press r key to restart", 100, 230);
-    noLoop();
+  text("Press space key to start", openScreenWordx1, 230);
+  fill(0);
+  text("Score:"+score, 50, 50);
+  text("Health:"+healthNumber, 50, 70);
+
+
+  //health detection
+  int p=0;
+  while (p < zcount) {
+    if (hero.isTouching(z[p])) {
+      hero.setC(-20);
+      healthNumber=healthNumber-1;
+      hero.setX(250);
+      hero.setY(250);
+      //int t = 0;
+      //while (t<activez) {
+      //z[t].setX(500);
+      //t++;
+      //}
+    }
+    p++;
   }
-  if (hero.isTouching(z1)) {
-    fill(0);
-    textSize(70);
-    text("Game over", 30, 200);
-    textSize(25);
-    text("Press r key to restart", 100, 230);
-    noLoop();
+  //health points
+  if (hero.isTouching(Health1)) {
+    hero.setC(20);
+    healthNumber=healthNumber+1;
+    Health1.setX(-20);
+    Health1.setY(-20);
   }
-  if (hero.isTouching(z2)) {
-    fill(0);
+
+  //death screen
+  if (healthNumber<=0) {
+    deathScreenx=70;
+    imagex=0;
+    image(Zombie1, imagex, 0, 500, 500);
+    fill(255, 0, 0);
     textSize(70);
-    text("Game over", 30, 200);
-    textSize(25);
-    text("Press r key to restart", 100, 230);
-    noLoop();
-  }
-  if (hero.isTouching(z3)) {
-    fill(0);
-    textSize(70);
-    text("Game over", 30, 200);
-    textSize(25);
-    text("Press r key to restart", 100, 230);
-    noLoop();
-  }
-  if (hero.isTouching(z4)) {
-    fill(0);
-    textSize(70);
-    text("Game over", 30, 200);
-    textSize(25);
-    text("Press r key to restart", 100, 230);
-    noLoop();
-  }
-  if (hero.isTouching(z5)) {
-    fill(0);
-    textSize(70);
-    text("Game over", 30, 200);
-    textSize(25);
-    text("Press r key to restart", 100, 230);
-    noLoop();
-  }
-  if (hero.isTouching(z6)) {
-    fill(0);
-    textSize(70);
-    text("Game over", 30, 200);
-    textSize(25);
-    text("Press r key to restart", 100, 230);
-    noLoop();
-  }
-  if (hero.isTouching(z7)) {
-    fill(0);
-    textSize(70);
-    text("Game over", 30, 200);
-    textSize(25);
-    text("Press r key to restart", 100, 230);
-    noLoop();
-  }
-  if (hero.isTouching(z8)) {
-    fill(0);
-    textSize(70);
-    text("Game over", 30, 200);
-    textSize(25);
-    text("Press r key to restart", 100, 230);
-    noLoop();
-  }
-  if (hero.isTouching(z9)) {
-    fill(0);
-    textSize(70);
-    text("Game over", 30, 200);
-    textSize(25);
-    text("Press r key to restart", 100, 230);
-    noLoop();
-  }
-  if (hero.isTouching(z10)) {
-    fill(0);
-    textSize(70);
-    text("Game over", 30, 200);
-    textSize(25);
-    text("Press r key to restart", 100, 230);
+    text("Game over", deathScreenx-40, 200);
+    textSize(15);
+    text("Press r key to restart", deathScreenx+100, 230);
+    text("Score:"+score, deathScreenx+130, 290);
+    activez=0; 
+    if (high<score) {
+      int d=score-high;
+      high=score;
+      textSize(15);
+      text("Wow! You beat your highscore by "+d, deathScreenx, 250);
+      text(" points", 331, 250);
+      text("now your highscore is "+high, deathScreenx+80, 270);
+    } else {
+      text("High Score:"+high, deathScreenx+130, 250);
+    }
     noLoop();
   }
 }
@@ -154,24 +170,29 @@ void keyPressed() {
   if (key==' ') {
     loop();
     col=255;
-    rectx=1000;
-    letx=1000;
-    letx1=1000;
+    openScreenImagex=1000;
+    openScreenWordx=1000;
+    openScreenWordx1=1000;
   }
   if (key=='r') {
+
+    int i = 0;
+    while (i<200) {
+      z[i].setX(-30);
+      z[i].setA(false);
+      i++;
+    }
+    imagex=1000;
+    activez=5;
+    hero.setX(250);
+    hero.setY(250);
+    q=0;
+    time=0;
+    hero.setcol(0);
+    healthNumber=1;
+    deathScreenx=1000;
     draw();
     loop();
-    z0.setX(-5);
-    z1.setX(-5);
-    z2.setX(-5);
-    z3.setX(-5);
-    z4.setX(-5);
-    z5.setX(-5);
-    z6.setX(-5);
-    z7.setX(-5);
-    z8.setX(-5);
-    z9.setX(-5);
-    z10.setX(-5);
   }
   if (key == CODED) {
     if (keyCode==UP) {

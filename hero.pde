@@ -6,62 +6,87 @@ class Hero {
   float s3;
   float s4;  
   float r;
-Hero(){
-  x1=250;
-  y1=250;
-  r=15;
-}
+  int col;
+  int c;
+  Hero() {
+    x1=250;
+    y1=250;
+    r=15;
+    col=0;
+    c=0;
+  }
 
   void update() {
-    fill(0);
-    ellipse(x1, y1, r*2, r*2);
+    col=col+c;
+    fill(col,0,0);
+    image(hero1,x1, y1, r*2, r*2);
     x1=x1-s4;
     x1=x1+s3;
     y1=y1-s1;
     y1=y1+s2;
-     if (x1>485) {
-    s3=0;
-    x1=485;
-  }
-  if (x1<15) {
-    s4=0;
-    x1=15;
-  }
-  if (y1>485) {
-    s2=0;
-    y1=485;
-  }
-  if (y1<15) {
-    s1=0;
-    y1=15;
-  }
-  }
-   void setS1(float newS1_) {
-    s1 = newS1_;}
-    void setS2(float newS2_) {
-    s2 = newS2_;}
-    void setS3(float newS3_) {
-    s3 = newS3_;}
-    void setS4(float newS4_) {
-    s4 = newS4_;}
-    
-    boolean isTouching(Zomies z) {
-
-    // determine distance between the objects
-    //        dino - cactus
-    float a = y1 - z.getY();
-    float b = x1 - z.getX();
-    float distance = sqrt(a*a + b*b);
-
-    // decide whether dino is touching this cactus
-    //            dino radius   cactus radius
-    if ( distance < (   r    +     z.getR()) ) {
-      return true;  // exit the method and say "yes" (is touching!) or "true"
+    c=0;
+    if (x1>470) {
+      s3=0;
+      x1=470;
     }
+    if (x1<0) {
+      s4=0;
+      x1=0;
+    }
+    if (y1>470) {
+      s2=0;
+      y1=470;
+    }
+    if (y1<0) {
+      s1=0;
+      y1=0;
+    }
+  }
+  void setS1(float newS1_) {
+    s1 = newS1_;
+  }
+  void setS2(float newS2_) {
+    s2 = newS2_;
+  }
+  void setS3(float newS3_) {
+    s3 = newS3_;
+  }
+  void setS4(float newS4_) {
+    s4 = newS4_;
+  }
+  void setC(int newC_) {
+    c = newC_;
+  }
+  void setcol(int newcol_) {
+    col= newcol_;
+  }
+  void setX(float newx_) {
+    x1 = newx_;
+  }
+  void setY(float newy_) {
+    y1 = newy_;
+  }
 
-    // when dino is not touching, say "no" (not touching) or "false"
+  boolean isTouching(Zomies z) {
+
+    // determine distance between the objects.
+    float a = (y1+r) - z.getY();
+    float b = (x1+r) - z.getX();
+    float distance = sqrt(a*a + b*b);
+    if ( distance < (   r    +     z.getR()) ) {
+      return true;
+    }
+    return false;
+  }
+  boolean isTouching(Health h) {
+
+    // determine distance between the objects.
+    float a = (y1+r) - h.getY();
+    float b = (x1+r) - h.getX();
+    float distance = sqrt(a*a + b*b);
+    if ( distance < (   r    +     h.getR()) ) {
+      return true;
+    }
     return false;
   }
 }
-
-  
