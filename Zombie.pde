@@ -39,7 +39,7 @@ void setup() {
   openScreenWordx1=100;
   q=5;
   //**starting amount activez+1**
-  activez=10;
+  activez=5;
   //**starting amount activez+1**
   time=0;
   score=0;
@@ -82,10 +82,10 @@ void draw() {
     hero.setC(35);
   }
   if (invincible==0) {
-     hero.setcol(15);
+    hero.setcol(15);
     hero.setC(15);
   }
-    
+
   //image(floor, 0, 0, 500, 500);
   background(200);
   Health1.update();
@@ -139,12 +139,13 @@ void draw() {
   while (p < zcount) {
     if (hero.isTouching(z[p])) {
       if (invincible==0) {
-        hero.setC(-20);
         healthNumber=healthNumber-1;
         hero.setX(250);
         hero.setY(250);
         invincible=4;
         invincibleTime=0;
+        hero.setcol(40);
+        hero.setC(40);
       }
     }
     p++;
@@ -174,7 +175,7 @@ void draw() {
       int d=score-high;
       high=score;
       textSize(15);
-      text("Wow! You beat your highscore by "+d, deathScreenx, 250);
+      text("Wow! You beat your highscore by  "+d, deathScreenx, 250);
       text(" points", 331, 250);
       text("now your highscore is "+high, deathScreenx+80, 270);
     } else {
@@ -183,6 +184,8 @@ void draw() {
     noLoop();
   }
 }
+
+
 void keyPressed() {
   if (key==' ') {
     loop();
@@ -205,10 +208,12 @@ void keyPressed() {
     hero.setY(250);
     q=0;
     time=0;
-     hero.setcol(15);
+    hero.setcol(15);
     hero.setC(15);
     healthNumber=1;
     deathScreenx=1000;
+    invincible=0;
+    invincibleTime=0;
     draw();
     loop();
   }
