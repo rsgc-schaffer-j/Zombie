@@ -13,10 +13,10 @@ PImage zombiehead;
 PImage Zombie1;
 PImage floor;
 
-float col;
+int col;
 int openScreenImagex;
-float openScreenWordx;
-float openScreenWordx1;
+int openScreenWordx;
+int openScreenWordx1;
 float q;  //new zombie time counter
 int time;  //time
 int activez; 
@@ -30,6 +30,7 @@ int invincibleTime;
 PrintWriter output;
 BufferedReader reader;
 String line;    
+int in;
 void setup() {
   size(500, 500);
   hero=new Hero();
@@ -53,7 +54,6 @@ void setup() {
   healthNumber=1;
   deathScreenx=1000;
   invincible=0;
-  //line=reader.readLine();
   //zombie creater
   z = new Zomies[zcount];  
   int i = 0;
@@ -79,6 +79,18 @@ void draw() {
   if (openScreenWordx==30) {
     noLoop();
   }
+  //try {
+  // line=reader.readLine();
+  //}
+  //catch (IOException e) {
+  // e.printStackTrace();
+  // line = null;
+  //}
+  //if (line == null) {
+  // noLoop();
+  //}
+  //in = Integer.parseInt(line.trim());
+  //high=in;
 
   //invicibility
   if (invincible>0) {
@@ -147,8 +159,6 @@ void draw() {
     if (hero.isTouching(z[p])) {
       if (invincible==0) {
         healthNumber=healthNumber-1;
-        hero.setX(250);
-        hero.setY(250);
         invincible=4;
         invincibleTime=0;
         hero.setcol(40);
@@ -157,6 +167,15 @@ void draw() {
     }
     p++;
   }
+  
+  //test shot
+  //int j=0;
+  //while (j < zcount) {
+  //  if (hero.istouching(z[j])) {
+  // noLoop();
+  //  }
+  //  j++;
+  //}
   //health points
   if (hero.isTouching(Health1)) {
     hero.setC(20);
@@ -164,6 +183,7 @@ void draw() {
     Health1.setX(-20);
     Health1.setY(-20);
   }
+
 
   //death screen
   if (healthNumber<=0) {
@@ -245,6 +265,22 @@ void keyPressed() {
       hero.setS3(3);
       hero.setS4(0);
     }
+    if (key=='w'||key=='W') {
+      hero.setl1(3);
+      hero.setl2(0);
+    }
+    if (key=='s'||key=='S') {
+      hero.setl2(3);
+      hero.setl1(0);
+    }
+    if (key=='a'||key=='A') {
+      hero.setl4(3);
+      hero.setl3(0);
+    }
+    if (key=='d'||key=='D') {
+      hero.setl3(3);
+      hero.setl4(0);
+    }
   }
 }
 void keyReleased() {
@@ -260,6 +296,18 @@ void keyReleased() {
     }
     if (keyCode==RIGHT) {
       hero.setS3(0);
+    }
+    if (key=='w'||key=='W') {
+      hero.setl1(0);
+    }
+    if (key=='s'||key=='S') {
+      hero.setl2(0);
+    }
+    if (key=='a'||key=='A') {
+      hero.setl4(0);
+    }
+    if (key=='d'||key=='D') {
+      hero.setl3(0);
     }
   }
 }

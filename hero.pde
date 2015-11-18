@@ -1,10 +1,20 @@
 class Hero {
   float x1;
   float y1;
+  float x2;
+  float y2;
   float s1;
   float s2;
   float s3;
-  float s4;  
+  float s4; 
+
+  //shots
+  float l1;
+  float l2;
+  float l3;
+  float l4; 
+
+  //hero
   float r;
   int col;
   int c;
@@ -14,13 +24,21 @@ class Hero {
     r=15;
     col=10;
     c=10;
+    x2=600;
+    y2=0;
   }
 
   void update() {
     fill(255);
     noStroke();
-ellipse(x1+15,y1+15,col,c);
-    image(hero1,x1, y1, 30, 30);
+    ellipse(x1+15, y1+15, col, c);
+    image(hero1, x1, y1, 30, 30);
+
+    //shots
+    stroke(0);
+    line(x1+15, y1+15, x2, y2);
+
+    //hero
     x1=x1-s4;
     x1=x1+s3;
     y1=y1-s1;
@@ -42,6 +60,20 @@ ellipse(x1+15,y1+15,col,c);
       s1=0;
       y1=0;
     }
+
+    //shots
+    if (x2>505) {
+      y2=y2+5;
+    }
+    if (x2<-5) {
+      y2=y2-5;
+    }
+    if (y2>505) {
+      x2=x2-5;
+    }
+    if (y2<-5) {
+      x2=x2+5;
+    }
   }
   void setS1(float newS1_) {
     s1 = newS1_;
@@ -55,6 +87,20 @@ ellipse(x1+15,y1+15,col,c);
   void setS4(float newS4_) {
     s4 = newS4_;
   }
+
+  //shots
+  void setl1(float newl1_) {
+    l1 = newl1_;
+  }
+  void setl2(float newl2_) {
+    l2 = newl2_;
+  }
+  void setl3(float newl3_) {
+    l3 = newl3_;
+  }
+  void setl4(float newl4_) {
+    l4 = newl4_;
+  }
   void setC(int newC_) {
     c = newC_;
   }
@@ -67,17 +113,14 @@ ellipse(x1+15,y1+15,col,c);
   void setY(float newy_) {
     y1 = newy_;
   }
-  void setR(float newr_) {
-    r = newr_;
-  }
 
-  boolean isTouching(Zomies z) {
+  boolean isTouching(Zomies z1) {
 
     // determine distance between the objects.
-    float a = (y1+r) - z.getY();
-    float b = (x1+r) - z.getX();
+    float a = (y1+r) - z1.getY();
+    float b = (x1+r) - z1.getX();
     float distance = sqrt(a*a + b*b);
-    if ( distance < (   r    +     z.getR()) ) {
+    if ( distance < (   r    +     z1.getR()) ) {
       return true;
     }
     return false;
@@ -89,6 +132,17 @@ ellipse(x1+15,y1+15,col,c);
     float b = (x1+r) - h.getX();
     float distance = sqrt(a*a + b*b);
     if ( distance < (   r    +     h.getR()) ) {
+      return true;
+    }
+    return false;
+  }
+  boolean istouching(Zomies z) {
+
+    // determine distance between the objects.
+    float a = (y2-y1) - z.getY();
+    float b = (x1-x2) - z.getX();
+    float distance = sqrt(a*a + b*b);
+    if ( distance < (z.getR()) ) {
       return true;
     }
     return false;
