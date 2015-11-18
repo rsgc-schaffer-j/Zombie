@@ -75,7 +75,7 @@ class Zomies {
         if (b<1&&b>-1) {
           b=random(-x1, x1);
         }
-      } else if (y>0&&y<25&&x>25&&x<475) {
+      } else if (y>0 && y<25 && x>25 && x<475) {
         y=y+x1;
         x=x+random(-x1, x1);
         a=random(-x1, x1);

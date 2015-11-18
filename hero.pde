@@ -87,20 +87,6 @@ class Hero {
   void setS4(float newS4_) {
     s4 = newS4_;
   }
-
-  //shots
-  void setl1(float newl1_) {
-    l1 = newl1_;
-  }
-  void setl2(float newl2_) {
-    l2 = newl2_;
-  }
-  void setl3(float newl3_) {
-    l3 = newl3_;
-  }
-  void setl4(float newl4_) {
-    l4 = newl4_;
-  }
   void setC(int newC_) {
     c = newC_;
   }

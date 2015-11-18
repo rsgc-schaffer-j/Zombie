@@ -29,15 +29,16 @@ int invincible;
 int invincibleTime;
 PrintWriter output;
 BufferedReader reader;
-String line;    
+String[] highscore;
 int in;
 void setup() {
+
   size(500, 500);
   hero=new Hero();
   Health1=new Health();
 
   //create highscore file
-  output = createWriter("highscore.txt");
+  
   reader = createReader("highscore.txt");
   //variables
   col=0;
@@ -73,24 +74,24 @@ void setup() {
   floor = loadImage("floor.jpg");
   zombiehead = loadImage("zombiehead.png");
   health = loadImage("health1.png");
+  highscore = loadStrings("highscore.txt");
+
+  //int k = 0;
+  //while (k < activez) { 
+  //String line1 = highscore[k];
+  //high = Integer.parseInt(line1);
+  // k++;
+  //}
 }
 
 void draw() {
+  //output.println(high);
+  //output.flush(); // Writes the remaining data to the file
+  //output.close(); // Finishes the file
   if (openScreenWordx==30) {
+    output.println(high);
     noLoop();
   }
-  //try {
-  // line=reader.readLine();
-  //}
-  //catch (IOException e) {
-  // e.printStackTrace();
-  // line = null;
-  //}
-  //if (line == null) {
-  // noLoop();
-  //}
-  //in = Integer.parseInt(line.trim());
-  //high=in;
 
   //invicibility
   if (invincible>0) {
@@ -167,7 +168,7 @@ void draw() {
     }
     p++;
   }
-  
+
   //test shot
   //int j=0;
   //while (j < zcount) {
@@ -202,12 +203,13 @@ void draw() {
     if (high<score) {
       int d=score-high;
       high=score;
+      output = createWriter("highscore.txt");
       output.println(high);
       output.flush(); // Writes the remaining data to the file
       output.close(); // Finishes the file
       textSize(15);
-      text("Wow! You beat your highscore by   "+d, deathScreenx, 250);
-      text(" points", 331, 250);
+      text("Wow! You beat your highscore by  "+d, deathScreenx, 250);
+      text("   points", 331, 250);
       text("now your highscore is "+high, deathScreenx+80, 270);
     } else {
       text("High Score:"+high, deathScreenx+130, 250);
@@ -234,7 +236,7 @@ void keyPressed() {
       i++;
     }
     imagex=1000;
-    activez=10;
+    activez=20;
     hero.setX(250);
     hero.setY(250);
     q=0;
@@ -265,22 +267,6 @@ void keyPressed() {
       hero.setS3(3);
       hero.setS4(0);
     }
-    if (key=='w'||key=='W') {
-      hero.setl1(3);
-      hero.setl2(0);
-    }
-    if (key=='s'||key=='S') {
-      hero.setl2(3);
-      hero.setl1(0);
-    }
-    if (key=='a'||key=='A') {
-      hero.setl4(3);
-      hero.setl3(0);
-    }
-    if (key=='d'||key=='D') {
-      hero.setl3(3);
-      hero.setl4(0);
-    }
   }
 }
 void keyReleased() {
@@ -296,18 +282,6 @@ void keyReleased() {
     }
     if (keyCode==RIGHT) {
       hero.setS3(0);
-    }
-    if (key=='w'||key=='W') {
-      hero.setl1(0);
-    }
-    if (key=='s'||key=='S') {
-      hero.setl2(0);
-    }
-    if (key=='a'||key=='A') {
-      hero.setl4(0);
-    }
-    if (key=='d'||key=='D') {
-      hero.setl3(0);
     }
   }
 }
