@@ -27,11 +27,17 @@ int healthNumber;
 int deathScreenx;
 int invincible;
 int invincibleTime;
+PrintWriter output;
+BufferedReader reader;
+String line;    
 void setup() {
   size(500, 500);
   hero=new Hero();
   Health1=new Health();
 
+  //create highscore file
+  output = createWriter("highscore.txt");
+  reader = createReader("highscore.txt");
   //variables
   col=0;
   openScreenImagex=0;
@@ -47,6 +53,7 @@ void setup() {
   healthNumber=1;
   deathScreenx=1000;
   invincible=0;
+  //line=reader.readLine();
   //zombie creater
   z = new Zomies[zcount];  
   int i = 0;
@@ -171,11 +178,15 @@ void draw() {
     text("Press r key to restart", deathScreenx+100, 230);
     text("Score:"+score, deathScreenx+130, 290);
     activez=0; 
+
     if (high<score) {
       int d=score-high;
       high=score;
+      output.println(high);
+      output.flush(); // Writes the remaining data to the file
+      output.close(); // Finishes the file
       textSize(15);
-      text("Wow! You beat your highscore by  "+d, deathScreenx, 250);
+      text("Wow! You beat your highscore by   "+d, deathScreenx, 250);
       text(" points", 331, 250);
       text("now your highscore is "+high, deathScreenx+80, 270);
     } else {
