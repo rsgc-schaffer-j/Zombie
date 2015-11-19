@@ -4,14 +4,14 @@ class Zomies {
   float a;
   float b;
   float r1;
-  int x1;
+  float speed;
   boolean active;
-
+ 
   Zomies(boolean active_) {
     x=random(-50, 250);
     y=random(-50, -40);
     r1=15;
-    x1=0;
+    speed=0;
     active=active_;
   }
   void update() {
@@ -19,104 +19,105 @@ class Zomies {
     image(zombiehead,x, y, 30, 30);
 
     if (active==true) {
-      x1=2;
+      speed=2;
       if (x>0 && x<25&&y>0&&y<25) {
-        x=x+x1;
-        y=y+x1;
-        a=random(-x1, x1);
-        b=random(-x1, x1);
+        x=x+speed;
+        y=y+speed;
+        a=random(-speed, speed);
+        b=random(-speed, speed);
         if (a<1&&a>-1) {
-          a=random(-x1, x1);
+          a=random(-speed, speed);
         }
         if (b<1&&b>-1) {
-          b=random(-x1, x1);
+          b=random(-speed, speed);
         }
       } else if (x>475&&x<500&&y>0&&y<25) {
-        x=x-x1;
-        y=y-x1;
-        a=random(-x1, x1);
-        b=random(-x1, x1);
+        x=x-speed;
+        y=y-speed;
+        a=random(-speed, speed);
+        b=random(-speed, speed);
         if (a<1&&a>-1) {
-          a=random(-x1, x1);
+          a=random(-speed, speed);
         }
         if (b<1&&b>-1) {
-          b=random(-x1, x1);
+          b=random(-speed, speed);
         }
       } else if (x>475&&x<500&&y>475&&y<500) {
         x=x-3;
-        y=y-x1;
-        a=random(-x1, x1);
-        b=random(-x1, x1);
+        y=y-speed;
+        a=random(-speed, speed);
+        b=random(-speed, speed);
         if (a<1&&a>-1) {
-          a=random(-x1, x1);
+          a=random(-speed, speed);
         }
         if (b<1&&b>-1) {
-          b=random(-x1, x1);
+          b=random(-speed, speed);
         }
       } else if (x>0 && x<25&&y>475&&y<500) {
-        x=x+x1;
-        y=y-x1;
-        a=random(-x1, x1);
-        b=random(-x1, x1);
+        x=x+speed;
+        y=y-speed;
+        a=random(-speed, speed);
+        b=random(-speed, speed);
         if (a<1&&a>-1) {
-          a=random(-x1, x1);
+          a=random(-speed, speed);
         }
         if (b<1&&b>-1) {
-          b=random(-x1, x1);
+          b=random(-speed, speed);
         }
       } else if (y>475&&y<500&&x>25&&x<475) {
-        y=y-x1;
-        x=x+random(-x1, x1);
-        a=random(-x1, x1);
-        b=random(-x1, x1);
+        y=y-speed;
+        x=x+random(-speed, speed);
+        a=random(-speed, speed);
+        b=random(-speed, speed);
         if (a<1&&a>-1) {
-          a=random(-x1, x1);
+          a=random(-speed, speed);
         }
         if (b<1&&b>-1) {
-          b=random(-x1, x1);
+          b=random(-speed, speed);
         }
       } else if (y>0 && y<25 && x>25 && x<475) {
-        y=y+x1;
-        x=x+random(-x1, x1);
-        a=random(-x1, x1);
-        b=random(-x1, x1);
+        y=y+speed;
+        x=x+random(-speed, speed);
+        a=random(-speed, speed);
+        b=random(-speed, speed);
         if (a<1&&a>-1) {
-          a=random(-x1, x1);
+          a=random(-speed, speed);
         }
         if (b<1&&b>-1) {
-          b=random(-x1, x1);
+          b=random(-speed, speed);
         }
       } else if (x>475&&x<500&&y>25&&y<475) {
-        x=x-x1;
-        y=y+random(-x1, x1);
-        a=random(-x1, x1);
-        b=random(-x1, x1);
+        x=x-speed;
+        y=y+random(-speed, speed);
+        a=random(-speed, speed);
+        b=random(-speed, speed);
         if (a<1&&a>-1) {
-          a=random(-x1, x1);
+          a=random(-speed, speed);
         }
         if (b<1&&b>-1) {
-          b=random(-x1, x1);
+          b=random(-speed, speed);
         }
       } else if (x>0&&x<25&&y>25&&y<475) {
-        x=x+x1;
-        y=y+random(-x1, x1);
-        a=random(-x1, x1);
-        b=random(-x1, x1);
+        x=x+speed;
+        y=y+random(-speed, speed);
+        a=random(-speed, speed);
+        b=random(-speed, speed);
         if (a<1&&a>-1) {
-          a=random(-x1, x1);
+          a=random(-speed, speed);
         }
         if (b<1&&b>-1) {
-          b=random(-x1, x1);
+          b=random(-speed, speed);
         }
       } else if (y>25&&y<475&&x>25&&x<475) {
         x=x+b;
         y=y+a;
-      } else {
-        x=x+x1;
-        y=y+x1;
+      } else if (x==-300){
+      }else {
+        x=x+speed;
+        y=y+speed;
       }
     } else if (active==false) {
-      x1=0;
+      speed=0;
     }
   }
   float getR() {

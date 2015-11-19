@@ -5,6 +5,7 @@ int zcount = 200;
 //classes
 Hero hero;
 Health Health1;
+Bullet Bullet;
 //images
 PImage hero1;
 PImage Zombie;
@@ -13,6 +14,7 @@ PImage zombiehead;
 PImage Zombie1;
 PImage floor;
 
+int bullet;
 int col;
 int openScreenImagex;
 int openScreenWordx;
@@ -36,9 +38,10 @@ void setup() {
   size(500, 500);
   hero=new Hero();
   Health1=new Health();
+  Bullet=new Bullet();
 
   //create highscore file
-  
+
   reader = createReader("highscore.txt");
   //variables
   col=0;
@@ -47,7 +50,7 @@ void setup() {
   openScreenWordx1=100;
   q=5;
   //**starting amount activez+1**
-  activez=5;
+  activez=10;
   //**starting amount activez+1**
   time=0;
   score=0;
@@ -55,6 +58,8 @@ void setup() {
   healthNumber=1;
   deathScreenx=1000;
   invincible=0;
+  bullet=10;
+
   //zombie creater
   z = new Zomies[zcount];  
   int i = 0;
@@ -74,14 +79,13 @@ void setup() {
   floor = loadImage("floor.jpg");
   zombiehead = loadImage("zombiehead.png");
   health = loadImage("health1.png");
+
+  //reads old highscore
   highscore = loadStrings("highscore.txt");
 
-  //int k = 0;
-  //while (k < activez) { 
-  //String line1 = highscore[k];
-  //high = Integer.parseInt(line1);
-  // k++;
-  //}
+  //writes old high score
+  String line1 = highscore[0];
+  high = Integer.parseInt(line1);
 }
 
 void draw() {
@@ -89,7 +93,6 @@ void draw() {
   //output.flush(); // Writes the remaining data to the file
   //output.close(); // Finishes the file
   if (openScreenWordx==30) {
-    output.println(high);
     noLoop();
   }
 
@@ -109,6 +112,7 @@ void draw() {
   //image(floor, 0, 0, 500, 500);
   background(200);
   Health1.update();
+  Bullet.update();
 
   //add zombies
   time=time+1;
@@ -118,6 +122,8 @@ void draw() {
     q=q+4*0.8;
     Health1.setX(random(5, 495));
     Health1.setY(random(5, 495));
+    Bullet.setX(random(5, 495));
+    Bullet.setY(random(5, 495));
 
     //safty net
     if (activez>zcount-2) {
@@ -150,9 +156,11 @@ void draw() {
   text("Zombie Rush", openScreenWordx, 200);
   textSize(25);
   text("Press space key to start", openScreenWordx1, 230);
+  textSize(20);
   fill(0);
   text("Score:"+score, 50, 50);
   text("Health:"+ healthNumber, 50, 70);
+  text("Ammo:"+ bullet, 50, 90);
 
   //health detection
   int p=0;
@@ -169,20 +177,20 @@ void draw() {
     p++;
   }
 
-  //test shot
-  //int j=0;
-  //while (j < zcount) {
-  //  if (hero.istouching(z[j])) {
-  // noLoop();
-  //  }
-  //  j++;
-  //}
+
   //health points
   if (hero.isTouching(Health1)) {
     hero.setC(20);
     healthNumber=healthNumber+1;
     Health1.setX(-20);
     Health1.setY(-20);
+  }
+
+  //ammo
+  if (hero.isTouching(Bullet)) {
+    bullet=bullet+10;
+    Bullet.setX(-20);
+    Bullet.setY(-20);
   }
 
 
@@ -247,7 +255,7 @@ void keyPressed() {
     deathScreenx=1000;
     invincible=0;
     invincibleTime=0;
-    draw();
+    setup();
     loop();
   }
   if (key == CODED) {
@@ -268,6 +276,19 @@ void keyPressed() {
       hero.setS4(0);
     }
   }
+  if (key=='z') {
+    // shot
+    if (bullet>0) {
+      int j=0;
+      while (j < zcount) {
+        if (hero.istouching(z[j])) {
+          z[j].setX(-300);
+        }
+        j++;
+      }
+    }
+    bullet=bullet-1;
+  }
 }
 void keyReleased() {
   if (key == CODED) {
@@ -283,5 +304,7 @@ void keyReleased() {
     if (keyCode==RIGHT) {
       hero.setS3(0);
     }
+  }
+  if (key=='z') {
   }
 }

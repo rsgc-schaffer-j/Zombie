@@ -122,14 +122,25 @@ class Hero {
     }
     return false;
   }
+   boolean isTouching(Bullet b1) {
+
+    // determine distance between the objects.
+    float a = (y1+r) - b1.getY();
+    float b = (x1+r) - b1.getX();
+    float distance = sqrt(a*a + b*b);
+    if ( distance < (   r    +     b1.getR()) ) {
+      return true;
+    }
+    return false;
+  }
   boolean istouching(Zomies z) {
 
     // determine distance between the objects.
-    float a = (y2-y1) - z.getY();
-    float b = (x1-x2) - z.getX();
-    float distance = sqrt(a*a + b*b);
-    if ( distance < (z.getR()) ) {
-      return true;
+    float m = (y2-(y1+15))/(x2-(x1+15));
+    float b = y2-m * x2;
+    float c = m * (z.getX()-7.5)+b;
+    if ( z.getY()-7.5 < c+10 && z.getY()-7.5 > c-10) {
+     return true;
     }
     return false;
   }
