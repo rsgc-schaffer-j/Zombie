@@ -24,8 +24,8 @@ class Hero {
     r=15;
     col=10;
     c=10;
-    x2=600;
-    y2=0;
+    x2=500;
+    y2=y1+r;
   }
 
   void update() {
@@ -36,7 +36,7 @@ class Hero {
 
     //shots
     stroke(0);
-    line(x1+15, y1+15, x2, y2);
+    line(x1+15, y1+15, mouseX, mouseY);
 
     //hero
     x1=x1-s4;
@@ -62,18 +62,18 @@ class Hero {
     }
 
     //shots
-    if (x2>505) {
-      y2=y2+5;
-    }
-    if (x2<-5) {
-      y2=y2-5;
-    }
-    if (y2>505) {
-      x2=x2-5;
-    }
-    if (y2<-5) {
-      x2=x2+5;
-    }
+    //if (x2>505) {
+    //  y2=y2+5;
+    //}
+    //if (x2<-5) {
+    //  y2=y2-5;
+    //}
+    //if (y2>505) {
+    //  x2=x2-5;
+    //}
+    //if (y2<-5) {
+    //  x2=x2+5;
+    //}
   }
   void setS1(float newS1_) {
     s1 = newS1_;
@@ -98,6 +98,18 @@ class Hero {
   }
   void setY(float newy_) {
     y1 = newy_;
+  }
+    void setX2(float newx2_) {
+    x2 = newx2_;
+  }
+  void setY2(float newy2_) {
+    y2 = newy2_;
+  }
+  float getX() {
+    return x1+r;
+  }
+  float getY() {
+    return y1+r;
   }
 
   boolean isTouching(Zomies z1) {
@@ -136,8 +148,8 @@ class Hero {
   boolean istouching(Zomies z) {
 
     // determine distance between the objects.
-    float m = (y2-(y1+15))/(x2-(x1+15));
-    float b = y2-m * x2;
+    float m = (mouseY-(y1+15))/( mouseX -(x1+15));
+    float b = mouseY-m * mouseX;
     float c = m * (z.getX()-7.5)+b;
     if ( z.getY()-7.5 < c+10 && z.getY()-7.5 > c-10) {
      return true;

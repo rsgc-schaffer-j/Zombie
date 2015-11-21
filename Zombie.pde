@@ -58,7 +58,7 @@ void setup() {
   healthNumber=1;
   deathScreenx=1000;
   invincible=0;
-  bullet=10;
+  bullet=100;
 
   //zombie creater
   z = new Zomies[zcount];  
@@ -155,12 +155,15 @@ void draw() {
   textSize(70);
   text("Zombie Rush", openScreenWordx, 200);
   textSize(25);
-  text("Press space key to start", openScreenWordx1, 230);
-  textSize(20);
+  text("Press P to start", openScreenWordx1, 230);
+  textSize(15);
   fill(0);
   text("Score:"+score, 50, 50);
   text("Health:"+ healthNumber, 50, 70);
   text("Ammo:"+ bullet, 50, 90);
+  fill(255);
+    textSize(15);
+  text("Use WASD to move, mosue to aim, and space to shoot.",openScreenWordx1-70,250);
 
   //health detection
   int p=0;
@@ -228,7 +231,7 @@ void draw() {
 
 
 void keyPressed() {
-  if (key==' ') {
+  if (key=='p') {
     loop();
     col=255;
     openScreenImagex=1000;
@@ -259,24 +262,31 @@ void keyPressed() {
     loop();
   }
   if (key == CODED) {
-    if (keyCode==UP) {
+    if (keyCode==UP||  key=='w' || key =='W' ) {
       hero.setS1(3);
       hero.setS2(0);
+      hero.setY2(0);
+      hero.setX2(hero.getX());
     }
-    if (keyCode==DOWN) {
+    if (keyCode==DOWN||  key=='s' || key =='S') {
       hero.setS2(3);
       hero.setS1(0);
+      hero.setY2(500);
+      hero.setX2(hero.getX());
     }
-    if (keyCode==LEFT) {
+    if (keyCode==LEFT||  key=='a' || key =='A') {
       hero.setS4(3);
       hero.setS3(0);
+      hero.setX2(0);
     }
-    if (keyCode==RIGHT) {
+    if (keyCode==RIGHT||  key=='d' || key =='D') {
       hero.setS3(3);
       hero.setS4(0);
+      hero.setX2(500);
+      hero.setY2(hero.getY());
     }
   }
-  if (key=='z') {
+  if (key=='z' || key ==' ') {
     // shot
     if (bullet>0) {
       int j=0;
@@ -286,25 +296,61 @@ void keyPressed() {
         }
         j++;
       }
+      bullet=bullet-1;
+      text("shot", 100, 100);
     }
-    bullet=bullet-1;
   }
+  if (key=='w' || key =='W' ) {
+      hero.setS1(3);
+      hero.setS2(0);
+      hero.setY2(0);
+      hero.setX2(hero.getX());
+    }
+    if (key=='s' || key =='S') {
+      hero.setS2(3);
+      hero.setS1(0);
+      hero.setY2(500);
+      hero.setX2(hero.getX());
+    }
+    if (key=='a' || key =='A') {
+      hero.setS4(3);
+      hero.setS3(0);
+      hero.setX2(0);
+    }
+    if (key=='d' || key =='D') {
+      hero.setS3(3);
+      hero.setS4(0);
+      hero.setX2(500);
+      hero.setY2(hero.getY());
+    }
 }
 void keyReleased() {
   if (key == CODED) {
-    if (keyCode==UP) {
+    if (keyCode==UP||  key=='w' || key =='W') {
       hero.setS1(0);
     }
-    if (keyCode==DOWN) {
+    if (keyCode==DOWN||  key=='s' || key =='S') {
       hero.setS2(0);
     }
-    if (keyCode==LEFT) {
+    if (keyCode==LEFT||  key=='a' || key =='A') {
       hero.setS4(0);
     }
-    if (keyCode==RIGHT) {
+    if (keyCode==RIGHT||  key=='d' || key =='D') {
       hero.setS3(0);
     }
   }
-  if (key=='z') {
+  if (key == ' ') {
   }
+   if ( key=='w' || key =='W') {
+      hero.setS1(0);
+    }
+    if (key=='s' || key =='S') {
+      hero.setS2(0);
+    }
+    if (key=='a' || key =='A') {
+      hero.setS4(0);
+    }
+    if (key=='d' || key =='D') {
+      hero.setS3(0);
+    }
 }
