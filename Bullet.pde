@@ -9,7 +9,7 @@ class Bullet{
   }
   void update(){
 fill(200,0,0);
-    ellipse(x,y,r*2,r*2);
+    image(ammo,x,y,r*2,r*2);
   }
   float getX() {
     return x+r;

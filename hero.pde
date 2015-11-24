@@ -35,7 +35,7 @@ class Hero {
     image(hero1, x1, y1, 30, 30);
 
     //shots
-    stroke(0);
+    noStroke();
     line(x1+15, y1+15, mouseX, mouseY);
 
     //hero

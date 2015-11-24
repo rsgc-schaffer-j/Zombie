@@ -13,6 +13,7 @@ PImage health;
 PImage zombiehead;
 PImage Zombie1;
 PImage floor;
+PImage ammo;
 
 int bullet;
 int col;
@@ -33,6 +34,7 @@ PrintWriter output;
 BufferedReader reader;
 String[] highscore;
 int in;
+  float k;
 void setup() {
 
   size(500, 500);
@@ -49,6 +51,7 @@ void setup() {
   openScreenWordx=30;
   openScreenWordx1=100;
   q=5;
+  k = 10;
   //**starting amount activez+1**
   activez=10;
   //**starting amount activez+1**
@@ -58,7 +61,7 @@ void setup() {
   healthNumber=1;
   deathScreenx=1000;
   invincible=0;
-  bullet=100;
+  bullet=5;
 
   //zombie creater
   z = new Zomies[zcount];  
@@ -79,6 +82,7 @@ void setup() {
   floor = loadImage("floor.jpg");
   zombiehead = loadImage("zombiehead.png");
   health = loadImage("health1.png");
+  ammo = loadImage("ammo.png");
 
   //reads old highscore
   highscore = loadStrings("highscore.txt");
@@ -89,9 +93,6 @@ void setup() {
 }
 
 void draw() {
-  //output.println(high);
-  //output.flush(); // Writes the remaining data to the file
-  //output.close(); // Finishes the file
   if (openScreenWordx==30) {
     noLoop();
   }
@@ -120,10 +121,8 @@ void draw() {
   Health1.update();
   if (score>q) {
     q=q+4*0.8;
-    Health1.setX(random(5, 495));
-    Health1.setY(random(5, 495));
-    Bullet.setX(random(5, 495));
-    Bullet.setY(random(5, 495));
+    Health1.setX(random(10, 490));
+    Health1.setY(random(10, 490));
 
     //safty net
     if (activez>zcount-2) {
@@ -136,6 +135,12 @@ void draw() {
     } else {
       activez=activez+1;
     }
+  }
+
+  if (score>k) {
+    k=k+8*0.8;
+    Bullet.setX(random(10, 490));
+    Bullet.setY(random(10, 490));
   }
   //draw zombies
   int i = 0;
@@ -155,15 +160,15 @@ void draw() {
   textSize(70);
   text("Zombie Rush", openScreenWordx, 200);
   textSize(25);
-  text("Press P to start", openScreenWordx1, 230);
+  text("Press space to start", openScreenWordx1+50, 230);
   textSize(15);
   fill(0);
   text("Score:"+score, 50, 50);
   text("Health:"+ healthNumber, 50, 70);
   text("Ammo:"+ bullet, 50, 90);
   fill(255);
-    textSize(15);
-  text("Use WASD to move, mosue to aim, and space to shoot.",openScreenWordx1-70,250);
+  textSize(15);
+  text("Use WASD to move, mouse to aim and shoot.", openScreenWordx1-0, 250);
 
   //health detection
   int p=0;
@@ -189,13 +194,17 @@ void draw() {
     Health1.setY(-20);
   }
 
-  //ammo
+  //Ammo
   if (hero.isTouching(Bullet)) {
-    bullet=bullet+10;
+    bullet=bullet+5;
     Bullet.setX(-20);
     Bullet.setY(-20);
   }
-
+  if (bullet==0) {
+    textSize(60);
+    fill(255, 0, 0);
+    text("No Ammo", 200, 60);
+  }
 
   //death screen
   if (healthNumber<=0) {
@@ -231,7 +240,7 @@ void draw() {
 
 
 void keyPressed() {
-  if (key=='p') {
+  if (key==' ') {
     loop();
     col=255;
     openScreenImagex=1000;
@@ -287,42 +296,30 @@ void keyPressed() {
     }
   }
   if (key=='z' || key ==' ') {
-    // shot
-    if (bullet>0) {
-      int j=0;
-      while (j < zcount) {
-        if (hero.istouching(z[j])) {
-          z[j].setX(-300);
-        }
-        j++;
-      }
-      bullet=bullet-1;
-      text("shot", 100, 100);
-    }
   }
   if (key=='w' || key =='W' ) {
-      hero.setS1(3);
-      hero.setS2(0);
-      hero.setY2(0);
-      hero.setX2(hero.getX());
-    }
-    if (key=='s' || key =='S') {
-      hero.setS2(3);
-      hero.setS1(0);
-      hero.setY2(500);
-      hero.setX2(hero.getX());
-    }
-    if (key=='a' || key =='A') {
-      hero.setS4(3);
-      hero.setS3(0);
-      hero.setX2(0);
-    }
-    if (key=='d' || key =='D') {
-      hero.setS3(3);
-      hero.setS4(0);
-      hero.setX2(500);
-      hero.setY2(hero.getY());
-    }
+    hero.setS1(3);
+    hero.setS2(0);
+    hero.setY2(0);
+    hero.setX2(hero.getX());
+  }
+  if (key=='s' || key =='S') {
+    hero.setS2(3);
+    hero.setS1(0);
+    hero.setY2(500);
+    hero.setX2(hero.getX());
+  }
+  if (key=='a' || key =='A') {
+    hero.setS4(3);
+    hero.setS3(0);
+    hero.setX2(0);
+  }
+  if (key=='d' || key =='D') {
+    hero.setS3(3);
+    hero.setS4(0);
+    hero.setX2(500);
+    hero.setY2(hero.getY());
+  }
 }
 void keyReleased() {
   if (key == CODED) {
@@ -341,16 +338,29 @@ void keyReleased() {
   }
   if (key == ' ') {
   }
-   if ( key=='w' || key =='W') {
-      hero.setS1(0);
+  if ( key=='w' || key =='W') {
+    hero.setS1(0);
+  }
+  if (key=='s' || key =='S') {
+    hero.setS2(0);
+  }
+  if (key=='a' || key =='A') {
+    hero.setS4(0);
+  }
+  if (key=='d' || key =='D') {
+    hero.setS3(0);
+  }
+}
+void mouseClicked() {
+  // shot
+  if (bullet>0) {
+    int j=0;
+    while (j < zcount) {
+      if (mouseX<z[j].getX()+15 && mouseX>z[j].getX()-15 && mouseY<z[j].getY()+15 && mouseY>z[j].getY()-15) {
+        z[j].setX(-300);
+      }
+      j++;
     }
-    if (key=='s' || key =='S') {
-      hero.setS2(0);
-    }
-    if (key=='a' || key =='A') {
-      hero.setS4(0);
-    }
-    if (key=='d' || key =='D') {
-      hero.setS3(0);
-    }
+    bullet=bullet-1;
+  }
 }
