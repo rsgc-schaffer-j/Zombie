@@ -138,6 +138,17 @@ class Zomies {
   void setA(boolean newa_) {
     active = newa_;
   }
+  boolean isTouching(Shot s) {
+
+    // determine distance between the objects.
+    float a = (y+r1) - s.getY();
+    float b = (x+r1) - s.getX();
+    float distance = sqrt(a*a + b*b);
+    if ( distance < (   r1    +     s.getR()) ) {
+      return true;
+    }
+    return false;
+  }
 }
 
   

@@ -33,11 +33,6 @@ class Hero {
     noStroke();
     ellipse(x1+15, y1+15, col, c);
     image(hero1, x1, y1, 30, 30);
-
-    //shots
-    noStroke();
-    line(x1+15, y1+15, mouseX, mouseY);
-
     //hero
     x1=x1-s4;
     x1=x1+s3;
@@ -155,5 +150,5 @@ class Hero {
      return true;
     }
     return false;
-  }
+  } 
 }

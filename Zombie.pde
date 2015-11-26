@@ -2,10 +2,13 @@ Zomies[] z;
 //***ZOMBIE MAX NUMBER***
 int zcount = 200;
 //***ZOMBIE MAX NUMBER***
+int shotcount = 200;
+int actives;
 //classes
 Hero hero;
 Health Health1;
 Bullet Bullet;
+Shot[] shot;
 //images
 PImage hero1;
 PImage Zombie;
@@ -14,7 +17,7 @@ PImage zombiehead;
 PImage Zombie1;
 PImage floor;
 PImage ammo;
-
+int colour;
 int bullet;
 int col;
 int openScreenImagex;
@@ -34,13 +37,15 @@ PrintWriter output;
 BufferedReader reader;
 String[] highscore;
 int in;
-  float k;
+float k;
+//import processing.sound.*
 void setup() {
 
   size(500, 500);
   hero=new Hero();
   Health1=new Health();
   Bullet=new Bullet();
+
 
   //create highscore file
 
@@ -58,11 +63,12 @@ void setup() {
   time=0;
   score=0;
   imagex=1000;
-  healthNumber=1;
+  healthNumber=3;
   deathScreenx=1000;
   invincible=0;
   bullet=5;
-
+  actives = 0;
+  colour=0;
   //zombie creater
   z = new Zomies[zcount];  
   int i = 0;
@@ -74,6 +80,12 @@ void setup() {
   while (t < activez) { 
     z[t] = new Zomies(true);
     t++;
+  }
+  shot = new Shot[shotcount];  
+  int w = 0;
+  while (w < shotcount) { 
+    shot[w]=new Shot(hero.getX(), hero.getY(), false);
+    w++;
   }
   //images
   Zombie = loadImage("Zombie.jpg");
@@ -96,7 +108,6 @@ void draw() {
   if (openScreenWordx==30) {
     noLoop();
   }
-
   //invicibility
   if (invincible>0) {
     invincibleTime = invincibleTime + 1;
@@ -114,7 +125,6 @@ void draw() {
   background(200);
   Health1.update();
   Bullet.update();
-
   //add zombies
   time=time+1;
   score=time/60;
@@ -138,7 +148,7 @@ void draw() {
   }
 
   if (score>k) {
-    k=k+8*0.8;
+    k=k+15*1.1;
     Bullet.setX(random(10, 490));
     Bullet.setY(random(10, 490));
   }
@@ -148,9 +158,15 @@ void draw() {
     z[i].update(); 
     i++;
   }
+  //draw bullets
+  int g = 0;
+  while (g < shotcount) {  
+    shot[g].update(); 
+    g++;
+  }
   z[activez].setA(true);
+  shot[actives].setA(true);
   hero.update();  
-
   //open screen
   noStroke();
   tint(255, 0, 0);
@@ -165,6 +181,7 @@ void draw() {
   fill(0);
   text("Score:"+score, 50, 50);
   text("Health:"+ healthNumber, 50, 70);
+  fill(colour, 0, 0);
   text("Ammo:"+ bullet, 50, 90);
   fill(255);
   textSize(15);
@@ -185,6 +202,15 @@ void draw() {
     p++;
   }
 
+  int m=0;
+  while (m < shotcount) {
+    if (z[m].isTouching(shot[actives])) {
+      z[m].setX(-300);
+      shot[actives].setX(600);
+      shot[actives].setY(600);
+    }
+    m++;
+  }
 
   //health points
   if (hero.isTouching(Health1)) {
@@ -201,9 +227,9 @@ void draw() {
     Bullet.setY(-20);
   }
   if (bullet==0) {
-    textSize(60);
-    fill(255, 0, 0);
-    text("No Ammo", 200, 60);
+    colour=255;
+  } else {
+    colour=0;
   }
 
   //death screen
@@ -354,13 +380,9 @@ void keyReleased() {
 void mouseClicked() {
   // shot
   if (bullet>0) {
-    int j=0;
-    while (j < zcount) {
-      if (mouseX<z[j].getX()+15 && mouseX>z[j].getX()-15 && mouseY<z[j].getY()+15 && mouseY>z[j].getY()-15) {
-        z[j].setX(-300);
-      }
-      j++;
-    }
     bullet=bullet-1;
+    actives=actives+1;
+    shot[actives].setrise(mouseY-(hero.getY()+15));
+    shot[actives].setrun(mouseX-(hero.getX()+15));
   }
 }
