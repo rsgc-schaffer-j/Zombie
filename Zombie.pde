@@ -222,7 +222,7 @@ void draw() {
 
   //Ammo
   if (hero.isTouching(Bullet)) {
-    bullet=bullet+5;
+    bullet=bullet+10;
     Bullet.setX(-20);
     Bullet.setY(-20);
   }
