@@ -7,7 +7,7 @@ class Hero {
   float s2;
   float s3;
   float s4; 
-
+  int player;
   //shots
   float l1;
   float l2;
@@ -26,13 +26,26 @@ class Hero {
     c=10;
     x2=500;
     y2=y1+r;
+    player=0;
   }
 
   void update() {
     fill(255);
     noStroke();
     ellipse(x1+15, y1+15, col, c);
-    image(hero1, x1, y1, 30, 30);
+    if (player==3) {
+      image(hero1, x1, y1, 30, 30);
+    }
+    if (player==2) {
+      image(MM, x1, y1, 30, 30);
+    }
+    if (player==1) {
+      image(bird, x1, y1, 30, 30);
+    }
+    if (player==0) {
+      image(happy, x1, y1, 30, 30);
+    }
+
     //hero
     x1=x1-s4;
     x1=x1+s3;
@@ -94,14 +107,20 @@ class Hero {
   void setY(float newy_) {
     y1 = newy_;
   }
-    void setX2(float newx2_) {
+  void setX2(float newx2_) {
     x2 = newx2_;
   }
   void setY2(float newy2_) {
     y2 = newy2_;
   }
+  void setP(int newp_) {
+    player = newp_;
+  }
   float getX() {
     return x1+r;
+  }
+  float getP() {
+    return player;
   }
   float getY() {
     return y1+r;
@@ -129,7 +148,7 @@ class Hero {
     }
     return false;
   }
-   boolean isTouching(Bullet b1) {
+  boolean isTouching(Bullet b1) {
 
     // determine distance between the objects.
     float a = (y1+r) - b1.getY();
@@ -147,8 +166,8 @@ class Hero {
     float b = mouseY-m * mouseX;
     float c = m * (z.getX()-7.5)+b;
     if ( z.getY()-7.5 < c+10 && z.getY()-7.5 > c-10) {
-     return true;
+      return true;
     }
     return false;
-  } 
+  }
 }

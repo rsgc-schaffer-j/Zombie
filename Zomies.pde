@@ -31,7 +31,7 @@ class Zomies {
         if (b<1&&b>-1) {
           b=random(-speed, speed);
         }
-      } else if (x>475&&x<500&&y>0&&y<25) {
+      } else if (x>475&&x<500&&y>0&&y<5) {
         x=x-speed;
         y=y-speed;
         a=random(-speed, speed);
@@ -53,7 +53,7 @@ class Zomies {
         if (b<1&&b>-1) {
           b=random(-speed, speed);
         }
-      } else if (x>0 && x<25&&y>475&&y<500) {
+      } else if (x>0 && x<5&&y>475&&y<500) {
         x=x+speed;
         y=y-speed;
         a=random(-speed, speed);
@@ -64,7 +64,7 @@ class Zomies {
         if (b<1&&b>-1) {
           b=random(-speed, speed);
         }
-      } else if (y>475&&y<500&&x>25&&x<475) {
+      } else if (y>475&&y<500&&x>5&&x<475) {
         y=y-speed;
         x=x+random(-speed, speed);
         a=random(-speed, speed);
@@ -75,7 +75,7 @@ class Zomies {
         if (b<1&&b>-1) {
           b=random(-speed, speed);
         }
-      } else if (y>0 && y<25 && x>25 && x<475) {
+      } else if (y>0 && y<5 && x>5 && x<475) {
         y=y+speed;
         x=x+random(-speed, speed);
         a=random(-speed, speed);
@@ -86,7 +86,7 @@ class Zomies {
         if (b<1&&b>-1) {
           b=random(-speed, speed);
         }
-      } else if (x>475&&x<500&&y>25&&y<475) {
+      } else if (x>475&&x<500&&y>5&&y<475) {
         x=x-speed;
         y=y+random(-speed, speed);
         a=random(-speed, speed);
@@ -97,7 +97,7 @@ class Zomies {
         if (b<1&&b>-1) {
           b=random(-speed, speed);
         }
-      } else if (x>0&&x<25&&y>25&&y<475) {
+      } else if (x>0&&x<5&&y>5&&y<475) {
         x=x+speed;
         y=y+random(-speed, speed);
         a=random(-speed, speed);
@@ -108,7 +108,7 @@ class Zomies {
         if (b<1&&b>-1) {
           b=random(-speed, speed);
         }
-      } else if (y>25&&y<475&&x>25&&x<475) {
+      } else if (y>5&&y<475&&x>5&&x<475) {
         x=x+b;
         y=y+a;
       } else if (x==-300){

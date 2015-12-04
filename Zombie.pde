@@ -1,5 +1,6 @@
+import processing.sound.*;
 Zomies[] z;
-//***ZOMBIE MAX NUMBER***
+//***ZOMBIE ghj, NUMBER***
 int zcount = 200;
 //***ZOMBIE MAX NUMBER***
 int shotcount = 200;
@@ -9,10 +10,15 @@ Hero hero;
 Health Health1;
 Bullet Bullet;
 Shot[] shot;
+//sound
+SoundFile shots;
 //images
 PImage hero1;
 PImage Zombie;
+PImage happy;
+PImage MM;
 PImage health;
+PImage bird;
 PImage zombiehead;
 PImage Zombie1;
 PImage floor;
@@ -38,6 +44,7 @@ BufferedReader reader;
 String[] highscore;
 int in;
 float k;
+float HC;    //highscore per game
 //import processing.sound.*
 void setup() {
 
@@ -57,7 +64,7 @@ void setup() {
   openScreenWordx1=100;
   q=5;
   k = 10;
-  //**starting amount activez+1**
+  //**starting amount activez+1**waw
   activez=10;
   //**starting amount activez+1**
   time=0;
@@ -69,6 +76,7 @@ void setup() {
   bullet=5;
   actives = 0;
   colour=0;
+  HC = 0;
   //zombie creater
   z = new Zomies[zcount];  
   int i = 0;
@@ -90,12 +98,15 @@ void setup() {
   //images
   Zombie = loadImage("Zombie.jpg");
   Zombie1 = loadImage("Zombie1.jpg");
+  happy = loadImage("happy.png");
+  bird = loadImage("bird.png");
+  MM = loadImage("mnm.png");
   hero1 = loadImage("batman.png");
   floor = loadImage("floor.jpg");
   zombiehead = loadImage("zombiehead.png");
   health = loadImage("health1.png");
   ammo = loadImage("ammo.png");
-
+  shots= new SoundFile(this, "FREE SOUND EFFECT - AK- 47 Gun Shot.mp3");
   //reads old highscore
   highscore = loadStrings("highscore.txt");
 
@@ -105,6 +116,17 @@ void setup() {
 }
 
 void draw() {
+
+  if (HC>100&&HC<50) {
+    hero.setP(1);
+  }
+  if (HC>100) {
+    hero.setP(2);
+  }
+  if (HC>200) {
+    hero.setP(3);
+  }
+
   if (openScreenWordx==30) {
     noLoop();
   }
@@ -130,7 +152,7 @@ void draw() {
   score=time/60;
   Health1.update();
   if (score>q) {
-    q=q+4*0.8;
+    q=q+4*1.1;
     Health1.setX(random(10, 490));
     Health1.setY(random(10, 490));
 
@@ -222,7 +244,7 @@ void draw() {
 
   //Ammo
   if (hero.isTouching(Bullet)) {
-    bullet=bullet+10;
+    bullet=bullet+5;
     Bullet.setX(-20);
     Bullet.setY(-20);
   }
@@ -231,7 +253,6 @@ void draw() {
   } else {
     colour=0;
   }
-
   //death screen
   if (healthNumber<=0) {
     deathScreenx=70;
@@ -260,6 +281,9 @@ void draw() {
     } else {
       text("High Score:"+high, deathScreenx+130, 250);
     }
+    if (HC<score) {
+      HC=score;
+    }
     noLoop();
   }
 }
@@ -276,11 +300,21 @@ void keyPressed() {
   if (key=='r') {
 
     int i = 0;
-    while (i<200) {
+    while (i<190) {
       z[i].setX(-30);
       z[i].setA(false);
       i++;
     }
+    z[1].setA(true);
+    z[2].setA(true);
+    z[3].setA(true);
+    z[4].setA(true);
+    z[5].setA(true);
+    z[6].setA(true);
+    z[7].setA(true);
+    z[8].setA(true);
+    z[9].setA(true);
+    z[10].setA(true);
     imagex=1000;
     activez=20;
     hero.setX(250);
@@ -293,7 +327,7 @@ void keyPressed() {
     deathScreenx=1000;
     invincible=0;
     invincibleTime=0;
-    setup();
+    draw();
     loop();
   }
   if (key == CODED) {
@@ -379,6 +413,7 @@ void keyReleased() {
 }
 void mouseClicked() {
   // shot
+
   if (bullet>0) {
     bullet=bullet-1;
     actives=actives+1;
