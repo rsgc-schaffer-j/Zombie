@@ -17,13 +17,11 @@ class Hero {
   //hero
   float r;
   int col;
-  int c;
   Hero() {
     x1=250;
     y1=250;
     r=15;
     col=10;
-    c=10;
     x2=500;
     y2=y1+r;
     player=0;
@@ -32,7 +30,10 @@ class Hero {
   void update() {
     fill(255);
     noStroke();
-    ellipse(x1+15, y1+15, col, c);
+    ellipse(x1+15, y1+15, col, col);
+    if (player==4) {
+      image(melon, x1, y1, 30, 30);
+    }
     if (player==3) {
       image(hero1, x1, y1, 30, 30);
     }
@@ -45,13 +46,14 @@ class Hero {
     if (player==0) {
       image(happy, x1, y1, 30, 30);
     }
+    
 
     //hero
     x1=x1-s4;
     x1=x1+s3;
     y1=y1-s1;
     y1=y1+s2;
-    c=0;
+
     if (x1>470) {
       s3=0;
       x1=470;
@@ -94,9 +96,6 @@ class Hero {
   }
   void setS4(float newS4_) {
     s4 = newS4_;
-  }
-  void setC(int newC_) {
-    c = newC_;
   }
   void setcol(int newcol_) {
     col= newcol_;

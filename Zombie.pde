@@ -14,9 +14,11 @@ Shot[] shot;
 SoundFile shots;
 //images
 PImage hero1;
+PImage melon;
 PImage Zombie;
 PImage happy;
 PImage MM;
+PImage bat;
 PImage health;
 PImage bird;
 PImage zombiehead;
@@ -44,8 +46,13 @@ BufferedReader reader;
 String[] highscore;
 int in;
 float k;
-float HC;    //highscore per game
-//import processing.sound.*
+int HC; //highscore per game
+int imagex5;
+int imagex2;
+int imagex3;
+int imagex4;
+int HCtext;
+float ZS;   //Zombie spawn
 void setup() {
 
   size(500, 500);
@@ -64,6 +71,7 @@ void setup() {
   openScreenWordx1=100;
   q=5;
   k = 10;
+  ZS=3;
   //**starting amount activez+1**waw
   activez=10;
   //**starting amount activez+1**
@@ -77,6 +85,11 @@ void setup() {
   actives = 0;
   colour=0;
   HC = 0;
+  imagex5=900;
+  imagex2=900;
+  imagex3=900;
+  imagex4=900;
+  HCtext=800;
   //zombie creater
   z = new Zomies[zcount];  
   int i = 0;
@@ -98,10 +111,12 @@ void setup() {
   //images
   Zombie = loadImage("Zombie.jpg");
   Zombie1 = loadImage("Zombie1.jpg");
+  melon = loadImage("melon.png");
   happy = loadImage("happy.png");
   bird = loadImage("bird.png");
   MM = loadImage("mnm.png");
   hero1 = loadImage("batman.png");
+  bat = loadImage("bat.png");
   floor = loadImage("floor.jpg");
   zombiehead = loadImage("zombiehead.png");
   health = loadImage("health1.png");
@@ -117,14 +132,22 @@ void setup() {
 
 void draw() {
 
-  if (HC>100&&HC<50) {
+  if (HC<100&&HC>50) {
     hero.setP(1);
   }
-  if (HC>100) {
+  if (HC>100&&HC<150) {
     hero.setP(2);
   }
   if (HC>200) {
     hero.setP(3);
+    int as=0;
+    while (as<shotcount){
+    shot[as].setc(1);
+    as++;
+    }
+  }
+  if (HC>150&&HC<200) {
+    hero.setP(4);
   }
 
   if (openScreenWordx==30) {
@@ -136,14 +159,12 @@ void draw() {
     int t = invincibleTime/60;
     invincible = invincible - t;
     hero.setcol(35);
-    hero.setC(35);
   }
   if (invincible==0) {
     hero.setcol(15);
-    hero.setC(15);
   }
 
-  //image(floor, 0, 0, 500, 500);
+
   background(200);
   Health1.update();
   Bullet.update();
@@ -151,11 +172,15 @@ void draw() {
   time=time+1;
   score=time/60;
   Health1.update();
+
   if (score>q) {
-    q=q+4*1.1;
+    q=q+4*1.3;
     Health1.setX(random(10, 490));
     Health1.setY(random(10, 490));
+  }
 
+  if (score>ZS) {
+    ZS=ZS+4*0.8;
     //safty net
     if (activez>zcount-2) {
       textSize(20);
@@ -170,7 +195,7 @@ void draw() {
   }
 
   if (score>k) {
-    k=k+15*1.1;
+    k=k+15*1.5;
     Bullet.setX(random(10, 490));
     Bullet.setY(random(10, 490));
   }
@@ -218,7 +243,6 @@ void draw() {
         invincible=4;
         invincibleTime=0;
         hero.setcol(40);
-        hero.setC(40);
       }
     }
     p++;
@@ -236,7 +260,7 @@ void draw() {
 
   //health points
   if (hero.isTouching(Health1)) {
-    hero.setC(20);
+
     healthNumber=healthNumber+1;
     Health1.setX(-20);
     Health1.setY(-20);
@@ -255,6 +279,7 @@ void draw() {
   }
   //death screen
   if (healthNumber<=0) {
+    HCtext=200;
     deathScreenx=70;
     imagex=0;
     image(Zombie1, imagex, 0, 500, 500);
@@ -266,7 +291,32 @@ void draw() {
     text("Press r key to restart", deathScreenx+100, 230);
     text("Score:"+score, deathScreenx+130, 290);
     activez=0; 
-
+    text("Your highscore today is "+HC, deathScreenx+80, 310);
+    noTint();
+    if (HC<score) {
+      HC=score;
+    }
+    text("character: ", HCtext, 330);
+    if (HC<50) {
+      imagex5=200;
+      image(happy, imagex5, 350, 60, 60);
+    }
+    if (HC>150&&HC<200) {
+      imagex5=200;
+      image(melon, imagex5, 350, 60, 60);
+    }
+    if (HC>100&&HC<150) {
+      imagex3=200;
+      image(MM, imagex3, 350, 60, 60);
+    }
+    if (HC>200) {
+      imagex4=200;
+      image(hero1, imagex4, 350, 60, 60);
+    }
+    if (HC>50&&HC<100) {
+      imagex2=200;
+      image(bird, imagex2, 350, 60, 60);
+    }
     if (high<score) {
       int d=score-high;
       high=score;
@@ -280,9 +330,6 @@ void draw() {
       text("now your highscore is "+high, deathScreenx+80, 270);
     } else {
       text("High Score:"+high, deathScreenx+130, 250);
-    }
-    if (HC<score) {
-      HC=score;
     }
     noLoop();
   }
@@ -315,15 +362,22 @@ void keyPressed() {
     z[8].setA(true);
     z[9].setA(true);
     z[10].setA(true);
+    HCtext = 800;
+    imagex5=600;
+    imagex2=600;
+    imagex3=600;
+    imagex4=600;
     imagex=1000;
     activez=20;
     hero.setX(250);
     hero.setY(250);
     q=0;
+    ZS=0;
+    k=0;
     time=0;
     hero.setcol(15);
-    hero.setC(15);
-    healthNumber=1;
+
+    healthNumber=3;
     deathScreenx=1000;
     invincible=0;
     invincibleTime=0;

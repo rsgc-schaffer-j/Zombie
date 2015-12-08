@@ -6,6 +6,7 @@ class Shot {
   float rise;
   float x2;
   float y2;
+    int col;
   boolean active;
   Shot(float x2_, float y2_, boolean active_) {
     y2=y2_;
@@ -16,11 +17,18 @@ class Shot {
     active=active_;
     rise=mouseY-(y2+15);
     run=mouseX-(x2+15);
+    col = 0;
   }
   void update() {
-    fill(200, 0, 0);
-    ellipse(x, y, r*2, r*2);
-
+    if (col==0) {
+      fill(200, 0, 0);
+      ellipse(x, y, r*2, r*2);
+    }
+    if (col==1) {
+        imageMode(CENTER);
+      image(bat, x, y, r*5, r*3);
+       imageMode(CORNER);
+    }
     if (active==true) {
       x=x+run/10;
       y=y+rise/10;
@@ -56,5 +64,8 @@ class Shot {
   }
   float getR() {
     return r;
+  }
+   void setc(int newc_) {
+    col = newc_;
   }
 }
