@@ -26,9 +26,24 @@ class Shot {
     }
     if (col==1) {
         imageMode(CENTER);
-      image(bat, x, y, r*5, r*3);
+      image(bat, x, y, r*6, r*3);
        imageMode(CORNER);
     }
+     if (col==2) {
+        imageMode(CENTER);
+      image(seed, x, y, 20, 20);
+       imageMode(CORNER);
+     }
+      if (col==3) {
+        imageMode(CENTER);
+      image(egg, x, y, 30, 30);
+       imageMode(CORNER);
+     }
+      if (col==4) {
+        imageMode(CENTER);
+      image(mm, x, y, 20, 20);
+       imageMode(CORNER);
+     }
     if (active==true) {
       x=x+run/10;
       y=y+rise/10;

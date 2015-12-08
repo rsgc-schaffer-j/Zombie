@@ -14,6 +14,9 @@ Shot[] shot;
 SoundFile shots;
 //images
 PImage hero1;
+PImage mm;
+PImage egg;
+PImage seed;
 PImage melon;
 PImage Zombie;
 PImage happy;
@@ -84,7 +87,7 @@ void setup() {
   bullet=5;
   actives = 0;
   colour=0;
-  HC = 0;
+  HC = 251;
   imagex5=900;
   imagex2=900;
   imagex3=900;
@@ -110,6 +113,9 @@ void setup() {
   }
   //images
   Zombie = loadImage("Zombie.jpg");
+  mm = loadImage("m&m.png");
+  egg = loadImage("angry.png");
+  seed = loadImage("seed.png");
   Zombie1 = loadImage("Zombie1.jpg");
   melon = loadImage("melon.png");
   happy = loadImage("happy.png");
@@ -117,7 +123,6 @@ void setup() {
   MM = loadImage("mnm.png");
   hero1 = loadImage("batman.png");
   bat = loadImage("bat.png");
-  floor = loadImage("floor.jpg");
   zombiehead = loadImage("zombiehead.png");
   health = loadImage("health1.png");
   ammo = loadImage("ammo.png");
@@ -134,20 +139,35 @@ void draw() {
 
   if (HC<100&&HC>50) {
     hero.setP(1);
+    int q=0;
+    while (q<shotcount) {
+      shot[q].setc(3);
+      q++;
+    }
   }
   if (HC>100&&HC<150) {
     hero.setP(2);
+    int y=0;
+    while (y<shotcount) {
+      shot[y].setc(4);
+      y++;
+    }
   }
   if (HC>200) {
     hero.setP(3);
     int as=0;
-    while (as<shotcount){
-    shot[as].setc(1);
-    as++;
+    while (as<shotcount) {
+      shot[as].setc(1);
+      as++;
     }
   }
   if (HC>150&&HC<200) {
     hero.setP(4);
+    int b=0;
+    while (b<shotcount) {
+      shot[b].setc(2);
+      b++;
+    }
   }
 
   if (openScreenWordx==30) {
@@ -408,8 +428,6 @@ void keyPressed() {
       hero.setX2(500);
       hero.setY2(hero.getY());
     }
-  }
-  if (key=='z' || key ==' ') {
   }
   if (key=='w' || key =='W' ) {
     hero.setS1(3);
